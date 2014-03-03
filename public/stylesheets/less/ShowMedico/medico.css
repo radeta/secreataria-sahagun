@@ -1,0 +1,27 @@
+ul.nav.nav-tabs {
+  color: #3694ED;
+  font-size: 20px;
+  font-weight: bold;
+}
+.tab-content {
+  padding: 1%;
+  box-shadow: 8px 8px 3px #d3d3d3, -1px 0px 3px #d3d3d3;
+}
+.tab-pane {
+  padding: 2%;
+}
+.tab-pane #inf-personal {
+  width: 100%;
+}
+.tab-pane #inf-personal .input-formu:disabled {
+  border: none;
+  background: none;
+  cursor: auto;
+  font-weight: bold;
+  font-size: 15px;
+  text-transform: uppercase;
+  color: blue;
+}
+.tab-pane #inf-personal .btn.input-form {
+  width: 100%;
+}

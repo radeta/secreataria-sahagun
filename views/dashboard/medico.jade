@@ -1,0 +1,146 @@
+extends ../layout
+
+block css
+  link(rel='stylesheet', href='/stylesheets/less/error/error.css')
+  link(rel='stylesheet', href='/stylesheets/less/ShowMedico/medico.css')
+block script
+  script
+    $(function(){
+      var myDate = new Date('#{datos.medico.fehaNaimiento}');
+      var dateString = (myDate .getMonth() + 1) + "/";
+      dateString += myDate .getDate() + "/";
+      dateString += myDate .getFullYear();
+       alert(dateString);
+    });
+block nav
+  .navbar-header
+    button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+      span.sr-only toogle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    a.navbar-brand(href='/') Secretaria de salud
+  #bs-example-navbar-collapse-1.collapse.navbar-collapse
+    a.navbar-brand.navbar-right#session_Close(href="/session/admin")
+      .btn.btn-info CERRAR SESION
+
+block content
+  .container.general
+    .row
+      .col-lg-12
+        .col-lg-3
+          img.img-rounded(src="/images/userMedico.00_PNG_SRZ", alt="")
+        .col-lg-9
+          ul.nav.nav-tabs
+            li.active
+              a(href="#opcion1" data-toggle="tab") INFORMACION PERSONAL
+            li
+              a(href="#opcion2" data-toggle="tab") TITULOS
+            li
+              a(href="#opcion3" data-toggle="tab") OTROS
+          .tab-content
+            #opcion1.tab-pane
+              form.form(rol="form" id="inf-personal")
+                table.table
+                  .form-group
+                    tr
+                      td
+                        label.control-label.col-sm-12(for="tIdent") Tipo Identificacion:
+                      td
+                        input.form-control.input-formu(type ="text" name="tIdent" id="tIdent" value="#{datos.medico.tipoIdent}" disabled="disabled")
+                      td
+                        label.control-label.col-sm-12(for="ident") Identificacion:
+                      td
+                        input.form-control.input-formu(type ="text" name="ident" id="ident"  value="#{datos.medico.identificacion}" disabled="disabled")
+                  .form-group
+                    tr
+                      td
+                        label.control-label.col-sm-12(for="nombres") Nombres:
+                      td
+                        input.form-control.input-formu(type="text" name="nombres" id="nombres" value="#{datos.medico.nombres}" disabled="disabled")
+                      td
+                        label.control-label.col-sm-12(for="PApellido") Primer apellido:
+                      td
+                        input.form-control.input-formu(type="text" name="PApellido" id="PApellido" value="#{datos.medico.apellidos.primero}" disabled="disabled")
+                  .form-group
+                    tr
+                      td
+                        label.control-label.col-sm-12(for="SApellido") Segundo apellido:
+                      td
+                        input.form-control.input-formu(type="text" name="SApellido" id="SApellido" value="#{datos.medico.apellidos.segundo}" disabled="disabled")
+                      td
+                        label.control-label.col-sm-12(for="sexo") Sexo:
+                      td
+                        if (datos.medico.sexo=='M')
+                          input.form-control.input-formu(type="text" name="sexo" id="sexo" value="Masculino" disabled="disabled")
+                        else
+                          input.form-control.input-formu(type="text" name="sexo" id="sexo" value="Femenino" disabled="disabled")
+                  .form-group
+                    tr
+                      td
+                        label.control-label.col-sm-12(for="Celular") Celular:
+                      td
+                        input.form-control.input-formu(type="text" name="Celular" id="Celular" value="#{datos.medico.telefono.celular}" disabled="disabled")
+                      td
+                        label.control-label.col-sm-12(for="telefono") Telefono:
+                      td
+                        input.form-control.input-formu(type="text" name="telefono" id="telefono" value="#{datos.medico.telefono.fijo}" disabled="disabled")
+                  .form-group
+                    tr
+                      td
+                        label.control-label.col-sm-12(for="fecNacim") Fecha de nacimiento:
+                      td
+                        input.form-control.input-formu(type="text" name="fecNacim" id="fecNacim" disabled="disabled")
+                      td
+                        label.control-label.col-sm-12(for="nacionalidad") Nacionalidad:
+                      td
+                        input.form-control.input-formu(type="text" name="nacionalidad" id="nacionalidad" value="#{datos.medico.nacionalidad}" disabled="disabled")
+                  .form-group
+                    tr
+                      td
+                        label.control-label.col-sm-12(for="municipio") Municipio:
+                      td
+                        input.form-control.input-formu(type="text" name="municipio" id="municipio" value="#{datos.medico.residencia.municipio}" disabled="disabled")
+                      td
+                        label.control-label.col-sm-12(for="direccion") Direccion:
+                      td
+                        input.form-control.input-formu(type="text" name="direccion" id="residencia" value="#{datos.medico.residencia.direccion}" disabled="disabled")
+                  .form-group
+                        tr
+                          td
+                          td
+                            input.btn.btn-primary.input-form(type="submit" id="registrar" value="Editar")
+                          td
+                            input.btn.btn-default.input-form(type="reset" id="borrar" value="Eliminar")
+                          td
+            #opcion2.tab-pane.active
+              ul
+             each val, index in datos.titulos
+              li= index +' : ' + val
+            #opcion3.tab-pane
+              h2 información
+
+block js
+  script(src="/javascripts/bootstrap/bootstrap.js")
+  script
+    $(function(){
+        var myDate = new Date('#{datos.medico.fehaNaimiento}');
+        var dateString = (myDate .getMonth() + 1) + "/";
+        dateString += myDate .getDate() + "/";
+        dateString += myDate .getFullYear();
+         $('#fecNacim').val(dateString);
+      });
+    $(document).on('ready', function(){
+        $('#session_Close').on('click', function(e){
+          e.preventDefault();
+            $.ajax({
+              url:"/session/admin",
+              method:"delete",
+              success: function(data){
+                if(data=="OK"){
+                  window.location.href = '/';
+                }
+              }
+            });
+        });
+    });
