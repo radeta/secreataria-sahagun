@@ -65,4 +65,7 @@ exports.addLugarTrabajo = function (req, res){
 	});
 	lugar.save();
 	res.send(200);
+
+
+
 }

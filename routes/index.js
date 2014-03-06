@@ -90,3 +90,8 @@ exports.sessionError = function (req, res){
 	var type = req.query.type;
 	res.render('homepage/sessionError', {title:'error', type:type});
 }
+
+//admins new
+exports.administrador = function (req, res){
+	res.render('homepage/registerAdmin', {title:'error'});
+}

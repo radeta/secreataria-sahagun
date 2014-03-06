@@ -44,6 +44,7 @@ app.get('/session/admin/error', routes.sessionError);
 app.get('/medicos', routes.addMedico);
 app.get('/medicos/busqueda', routes.busqueda);
 app.get('/medicos/:id', medicos.getMedicoByIdent);
+app.get('/admins', routes.administrador);
 
 // Metodos Post
 app.post('/session/admin', adminSession.NewSession);
@@ -59,10 +60,16 @@ app.get('/api/medicos/identificacion', medicos.verifivarIdBynum);
 app.get('/api/medicos/tarjeta', medicos.verifivarTarjetaBynum);
 app.get('/api/lugarTrabajo/nit', medicos.getNitBynum);
 app.get('/prueba', function (req, res){
-	models.lugarTrabajo.findOne({nit:'10256'}).populate('ubicacion._municipio').exec(function (err, lugar){
-		res.send(lugar);
+	models.municipios.find(function (err, lugar){
+		res.type('application/json');
+    		res.jsonp(lugar);
 	});
 });
+// app.get('/prueba', function (req, res){
+// 	models.lugarTrabajo.findOne({nit:'10256'}).populate('ubicacion._municipio').exec(function (err, lugar){
+// 		res.send(lugar);
+// 	});
+// });
 app.get('/municipios', test.municipios);
 
 http.createServer(app).listen(app.get('port'), function(){
